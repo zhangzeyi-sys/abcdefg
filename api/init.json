@@ -22,19 +22,19 @@
           "target": "_self",
           "child": [
             {
-              "title": "主页一",
+              "title": "主页",
               "href": "page/welcome-1.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
-              "title": "主页二",
+              "title": "评价信息",
               "href": "page/welcome-2.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
-              "title": "主页三",
+              "title": "我的评价",
               "href": "page/welcome-3.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
