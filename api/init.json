@@ -1,245 +1,359 @@
 {
-  "homeInfo": {
-    "title": "首页",
-    "href": "page/welcome-1.html?t=1"
-  },
-  "logoInfo": {
-    "title": "在线电影评价系统",
-    "image": "images/logo.png",
-    "href": ""
-  },
-  "menuInfo": [
-    {
-      "title": "常规管理",
-      "icon": "fa fa-address-book",
-      "href": "",
-      "target": "_self",
-      "child": [
+  "system_info": {
+    "system_name": "MovieReviewPro 在线电影评价系统",
+    "version": "1.0.0",
+    "launch_time": "2024-01-01 00:00:00",
+    "status": "running",
+    "core_features": [
+      "电影信息管理",
+      "用户交互评价",
+      "用户中心",
+      "搜索与推荐",
+      "后台管理",
+      "商业化对接"
+    ],
+    "api_config": {
+      "third_party_movie_db": [
         {
-          "title": "用户模块",
-          "href": "",
-          "icon": "fa fa-home",
-          "target": "_self",
-          "child": [
-            {
-              "title": "电影浏览",
-              "href": "page/welcome-1.html",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            },
-            {
-              "title": "评价互动",
-              "href": "page/welcome-2.html",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            },
-            {
-              "title": "用户中心",
-              "href": "page/welcome-3.html",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            }
-          ]
+          "name": "IMDb API",
+          "is_enabled": true,
+          "api_key": "default_init_key",
+          "sync_frequency": "24h"
         },
         {
-          "title": "后台管理模块",
-          "href": "page/menu.html",
-          "icon": "fa fa-window-maximize",
-          "target": "_self"
-        },
-        {
-          "title": "电影信息管理模块",
-          "href": "page/setting.html",
-          "icon": "fa fa-gears",
-          "target": "_self"
-        },
-        {
-          "title": "评价内容管理模块",
-          "href": "page/table.html",
-          "icon": "fa fa-file-text",
-          "target": "_self"
-        },
-        {
-          "title": "用户管理模块",
-          "href": "",
-          "icon": "fa fa-calendar",
-          "target": "_self",
-          "child": [
-            {
-              "title": "系统设置模块",
-              "href": "page/form.html",
-              "icon": "fa fa-list-alt",
-              "target": "_self"
-            },
-            {
-              "title": "分步表单",
-              "href": "page/form-step.html",
-              "icon": "fa fa-navicon",
-              "target": "_self"
-            }
-          ]
-        },
-        {
-          "title": "登录模板",
-          "href": "",
-          "icon": "fa fa-flag-o",
-          "target": "_self",
-          "child": [
-            {
-              "title": "登录-1",
-              "href": "page/login-1.html",
-              "icon": "fa fa-stumbleupon-circle",
-              "target": "_blank"
-            },
-            {
-              "title": "登录-2",
-              "href": "page/login-2.html",
-              "icon": "fa fa-viacoin",
-              "target": "_blank"
-            },
-            {
-              "title": "登录-3",
-              "href": "page/login-3.html",
-              "icon": "fa fa-tags",
-              "target": "_blank"
-            }
-          ]
-        },
-        {
-          "title": "异常页面",
-          "href": "",
-          "icon": "fa fa-home",
-          "target": "_self",
-          "child": [
-            {
-              "title": "404页面",
-              "href": "page/404.html",
-              "icon": "fa fa-hourglass-end",
-              "target": "_self"
-            }
-          ]
-        },
-        {
-          "title": "其它界面",
-          "href": "",
-          "icon": "fa fa-snowflake-o",
-          "target": "",
-          "child": [
-            {
-              "title": "按钮示例",
-              "href": "page/button.html",
-              "icon": "fa fa-snowflake-o",
-              "target": "_self"
-            },
-            {
-              "title": "弹出层",
-              "href": "page/layer.html",
-              "icon": "fa fa-shield",
-              "target": "_self"
-            }
-          ]
+          "name": "猫眼电影 API",
+          "is_enabled": true,
+          "api_key": "default_init_key",
+          "sync_frequency": "12h"
         }
-      ]
-    },
-    {
-      "title": "组件管理",
-      "icon": "fa fa-lemon-o",
-      "href": "",
-      "target": "_self",
-      "child": [
+      ],
+      "ticket_platform": [
         {
-          "title": "图标列表",
-          "href": "page/icon.html",
-          "icon": "fa fa-dot-circle-o",
-          "target": "_self"
+          "name": "猫眼票务",
+          "is_enabled": true,
+          "jump_url": "https://maoyan.com/ticket"
         },
         {
-          "title": "图标选择",
-          "href": "page/icon-picker.html",
-          "icon": "fa fa-adn",
-          "target": "_self"
-        },
-        {
-          "title": "颜色选择",
-          "href": "page/color-select.html",
-          "icon": "fa fa-dashboard",
-          "target": "_self"
-        },
-        {
-          "title": "下拉选择",
-          "href": "page/table-select.html",
-          "icon": "fa fa-angle-double-down",
-          "target": "_self"
-        },
-        {
-          "title": "文件上传",
-          "href": "page/upload.html",
-          "icon": "fa fa-arrow-up",
-          "target": "_self"
-        },
-        {
-          "title": "富文本编辑器",
-          "href": "page/editor.html",
-          "icon": "fa fa-edit",
-          "target": "_self"
-        },
-        {
-          "title": "省市县区选择器",
-          "href": "page/area.html",
-          "icon": "fa fa-rocket",
-          "target": "_self"
-        }
-      ]
-    },
-    {
-      "title": "其它管理",
-      "icon": "fa fa-slideshare",
-      "href": "",
-      "target": "_self",
-      "child": [
-        {
-          "title": "多级菜单",
-          "href": "",
-          "icon": "fa fa-meetup",
-          "target": "",
-          "child": [
-            {
-              "title": "按钮1",
-              "href": "page/button.html?v=1",
-              "icon": "fa fa-calendar",
-              "target": "_self",
-              "child": [
-                {
-                  "title": "按钮2",
-                  "href": "page/button.html?v=2",
-                  "icon": "fa fa-snowflake-o",
-                  "target": "_self",
-                  "child": [
-                    {
-                      "title": "按钮3",
-                      "href": "page/button.html?v=3",
-                      "icon": "fa fa-snowflake-o",
-                      "target": "_self"
-                    },
-                    {
-                      "title": "表单4",
-                      "href": "page/form.html?v=1",
-                      "icon": "fa fa-calendar",
-                      "target": "_self"
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "title": "失效菜单",
-          "href": "page/error.html",
-          "icon": "fa fa-superpowers",
-          "target": "_self"
+          "name": "淘票票",
+          "is_enabled": true,
+          "jump_url": "https://www.taopiaopiao.com"
         }
       ]
     }
-  ]
-}
+  },
+
+  "movie_data_structure": {
+    "base_info": {
+      "required_fields": [
+        "movie_id",
+        "title_cn",
+        "title_en",
+        "director",
+        "screenwriter",
+        "cast",
+        "genre",
+        "country",
+        "language",
+        "release_date",
+        "duration",
+        "rating",
+        "production_company",
+        "synopsis"
+      ],
+      "optional_fields": [
+        "alternate_title",
+        "film_score",
+        "box_office",
+        "awards"
+      ]
+    },
+    "media_resources": {
+      "poster": {
+        "sizes": ["300x450", "600x900", "1200x1800"],
+        "storage_path": "/static/movies/posters/"
+      },
+      "trailer": {
+        "formats": ["mp4", "webm"],
+        "storage_path": "/static/movies/trailers/",
+        "max_duration": "180s"
+      },
+      "stills": {
+        "storage_path": "/static/movies/stills/",
+        "max_count": 50
+      }
+    },
+    "related_info": {
+      "series_movie": {
+        "link_field": "series_id",
+        "display_label": "同系列电影"
+      },
+      "person_works": {
+        "link_field": "person_id",
+        "types": ["actor", "director", "screenwriter"]
+      }
+    }
+  },
+
+  "user_data_structure": {
+    "base_info": {
+      "required_fields": [
+        "user_id",
+        "username",
+        "avatar",
+        "phone",
+        "email",
+        "register_time",
+        "status"
+      ],
+      "optional_fields": [
+        "signature",
+        "birthdate",
+        "gender",
+        "movie_preference"
+      ]
+    },
+    "behavior_data": {
+      "watch_list": {
+        "types": ["watched", "want_watch", "watching"],
+        "record_fields": ["movie_id", "add_time", "rating", "comment_id"]
+      },
+      "collection": {
+        "types": ["movie", "review"],
+        "record_fields": ["target_id", "add_time", "type"]
+      },
+      "social": {
+        "follow": ["followed_user_id", "follow_time"],
+        "fans": ["fan_user_id", "follow_time"],
+        "dynamic": ["dynamic_id", "content", "publish_time", "like_count"]
+      }
+    },
+    "member_config": {
+      "levels": ["normal", "vip", "svip"],
+      "vip_benefits": [
+        "ad_free",
+        "review_priority",
+        "exclusive_avatar_frame",
+        "early_score_view",
+        "exclusive_content"
+      ],
+      "price": {
+        "vip_monthly": 19.9,
+        "vip_yearly": 199,
+        "svip_monthly": 39.9,
+        "svip_yearly": 365
+      }
+    }
+  },
+
+  "review_data_structure": {
+    "rating": {
+      "total_score": {
+        "scale": "1-5",
+        "calculation": "weighted_average",
+        "exclude_rule": "extreme_score(<=1 or >=5, count<3)"
+      },
+      "dimension_score": {
+        "dimensions": ["plot", "acting", "visual", "music", "effects"],
+        "scale": "1-5",
+        "display_type": "radar_chart"
+      },
+      "rating_reason": {
+        "default_options": [
+          "剧情紧凑",
+          "演技炸裂",
+          "画面精美",
+          "配乐贴合",
+          "特效震撼",
+          "剧情拖沓",
+          "演技尴尬",
+          "逻辑混乱"
+        ],
+        "allow_custom": true
+      }
+    },
+    "review": {
+      "long_review": {
+        "min_length": 200,
+        "editor_features": ["image", "emoji", "paragraph", "bold", "italic"],
+        "interact_fields": ["like_count", "collect_count", "comment_count", "report_count"]
+      },
+      "short_review": {
+        "max_length": 140,
+        "hot_display_rule": "sort_by_like",
+        "spoiler_tag": {
+          "auto_detect": true,
+          "display_text": "点击查看剧透"
+        }
+      },
+      "review_audit": {
+        "illegal_keywords_path": "/config/illegal_keywords.txt",
+        "audit_status": ["pending", "passed", "rejected", "deleted"]
+      }
+    }
+  },
+
+  "search_recommend_config": {
+    "search": {
+      "search_fields": ["movie_title", "director", "cast", "genre", "release_year", "country"],
+      "associate": {
+        "enable": true,
+        "max_suggestions": 10,
+        "history_record": {
+          "max_count": 20,
+          "expire_days": 30
+        }
+      },
+      "advanced_filter": {
+        "default_filters": [
+          {
+            "field": "genre",
+            "type": "multiple_choice"
+          },
+          {
+            "field": "release_year",
+            "type": "range"
+          },
+          {
+            "field": "rating",
+            "type": "range",
+            "range_options": ["0-5", "5-6", "6-7", "7-8", "8-9", "9-10"]
+          }
+        ]
+      }
+    },
+    "recommend": {
+      "algorithms": [
+        {
+          "name": "collaborative_filtering",
+          "enable": true,
+          "label": "喜欢这部的人也喜欢"
+        },
+        {
+          "name": "content_based",
+          "enable": true,
+          "label": "基于你的观影偏好"
+        }
+      ],
+      "scenario_recommend": {
+        "scenarios": [
+          "weekend_comedy",
+          "rainy_day_healing",
+          "couple_date_love",
+          "holiday_epic"
+        ],
+        "update_frequency": "7d"
+      },
+      "ranking_lists": [
+        {
+          "name": "weekly_hot",
+          "update_frequency": "1d",
+          "sort_field": "view_count"
+        },
+        {
+          "name": "monthly_high_score",
+          "update_frequency": "1d",
+          "sort_field": "average_rating"
+        },
+        {
+          "name": "annual_box_office",
+          "update_frequency": "1d",
+          "sort_field": "box_office"
+        }
+      ],
+      "new_movie": {
+        "display_days_before_release": 30,
+        "countdown_display": true,
+        "pre_sale_link": true
+      }
+    }
+  },
+
+  "backend_management_config": {
+    "content_audit": {
+      "review_audit": {
+        "auto_check": true,
+        "manual_check_threshold": {
+          "report_count": 5,
+          "sensitive_word_hit": 3
+        },
+        "audit_log_path": "/logs/audit/review_audit.log"
+      },
+      "movie_info_audit": {
+        "auto_sync_audit": true,
+        "manual_audit_fields": ["synopsis", "poster", "trailer"],
+        "audit_log_path": "/logs/audit/movie_audit.log"
+      }
+    },
+    "user_management": {
+      "user_status": ["normal", "warned", "banned", "frozen"],
+      "elite_user_tag": {
+        "conditions": [
+          "review_count >= 50",
+          "average_like_count >= 100",
+          "no_illegal_record"
+        ],
+        "benefits": ["homepage_recommend", "exclusive_badge"]
+      },
+      "user_log_path": "/logs/user/user_management.log"
+    },
+    "data_analysis": {
+      "operation_data": {
+        "metrics": ["DAU", "MAU", "review_count", "search_count"],
+        "report_cycle": ["daily", "weekly", "monthly"],
+        "report_path": "/data/reports/operation/"
+      },
+      "user_behavior": {
+        "analysis_fields": ["search_preference", "genre_preference", "interaction_behavior"],
+        "report_cycle": ["weekly"],
+        "report_path": "/data/reports/user_behavior/"
+      }
+    },
+    "system_maintenance": {
+      "function_switch": {
+        "short_review": true,
+        "third_party_share": true,
+        "member_service": true
+      },
+      "advertisement": {
+        "ad_positions": ["home_banner", "movie_detail_sidebar", "review_page_top"],
+        "max_display_count": 3,
+        "ad_log_path": "/logs/advertisement/ad_management.log"
+      },
+      "error_log": {
+        "log_path": "/logs/system/error.log",
+        "max_size": "100MB",
+        "backup_count": 10
+      }
+    }
+  },
+
+  "initial_default_data": {
+    "default_admin": [
+      {
+        "user_id": "admin001",
+        "username": "system_admin",
+        "password": "encrypted_default_pwd",
+        "avatar": "/static/default/avatar/admin.png",
+        "phone": "13800138000",
+        "email": "admin@moviereviewpro.com",
+        "register_time": "2024-01-01 00:00:00",
+        "status": "normal",
+        "role": "super_admin"
+      }
+    ],
+    "default_movies": [
+      {
+        "movie_id": "movie001",
+        "title_cn": "肖申克的救赎",
+        "title_en": "The Shawshank Redemption",
+        "director": ["弗兰克·德拉邦特"],
+        "screenwriter": ["弗兰克·德拉邦特", "斯蒂芬·金"],
+        "cast": ["蒂姆·罗宾斯", "摩根·弗里曼"],
+        "genre": ["剧情", "犯罪"],
+        "country": "美国",
+        "language": "英语",
+        "release_date": "1994-09-23",
+        "duration": "142min",
+        "rating": "R",
+        "production_company": ["城堡石娱乐公司"],
+       
