@@ -48,13 +48,13 @@
           "target": "_self"
         },
         {
-          "title": "电影信息管理模块",
+          "title": "评价内容管理模块",
           "href": "page/setting.html",
           "icon": "fa fa-gears",
           "target": "_self"
         },
         {
-          "title": "评价内容管理模块",
+          "title": "电影信息管理模块",
           "href": "page/table.html",
           "icon": "fa fa-file-text",
           "target": "_self"
