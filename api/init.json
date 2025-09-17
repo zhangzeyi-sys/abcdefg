@@ -126,8 +126,8 @@
             },
             {
               "title": "用户管理",
-              "href": "page/welcome-2.html",
-              "icon": "fa fa-tachometer",
+            "href": "page/form-step.html",
+              "icon": "fa fa-navicon",
               "target": "_self"
             },
             {
