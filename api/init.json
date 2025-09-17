@@ -1,4 +1,4 @@
-{
+【{
   "homeInfo": {
     "title": "首页",
     "href": "page/welcome-1.html?t=1"
@@ -16,33 +16,131 @@
       "target": "_self",
       "child": [
         {
-          "title": "用户模块",
+          "title": "电影信息管理模块",
           "href": "",
           "icon": "fa fa-home",
           "target": "_self",
           "child": [
             {
-              "title": "电影浏览",
+              "title": "电影基础信息管理",
               "href": "page/welcome-1.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
-              "title": "评价互动",
+              "title": "信息审核",
               "href": "page/welcome-2.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             },
             {
-              "title": "用户中心",
+              "title": "版本管理",
               "href": "page/welcome-3.html",
               "icon": "fa fa-tachometer",
               "target": "_self"
             }
           ]
         },
-        {
+         {
+          "title": "用户交互评价模块",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "评分系统",
+              "href": "page/welcome-1.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "影评管理",
+              "href": "page/welcome-2.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "短评与吐槽",
+              "href": "page/welcome-3.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        },
+         {
+          "title": "用户中心模块",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "个人信息管理",
+              "href": "page/welcome-1.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "观影记录与收藏",
+              "href": "page/welcome-2.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "社交互动",
+              "href": "page/welcome-3.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+            {
+          "title": "搜索与推荐模块",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "智能",
+              "href": "page/welcome-1.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "推荐模块",
+              "href": "page/welcome-2.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+  
+          ]
+        }, {
           "title": "后台管理模块",
+          "href": "",
+          "icon": "fa fa-home",
+          "target": "_self",
+          "child": [
+            {
+              "title": "内容审核管理",
+              "href": "page/welcome-1.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "用户管理",
+              "href": "page/welcome-2.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            },
+            {
+              "title": "数据统计与分析",
+              "href": "page/welcome-3.html",
+              "icon": "fa fa-tachometer",
+              "target": "_self"
+            }
+          ]
+        },
+        },
+        {
+          "title": "",
           "href": "page/menu.html",
           "icon": "fa fa-window-maximize",
           "target": "_self"
