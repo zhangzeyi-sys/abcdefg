@@ -11,7 +11,7 @@
       "sign": "动作",
       "experience": 255,
       "logins": 24,
-      "wealth": 2小时,
+      "wealth": 2hour,
       "classify": "会员",
       "score": 9.0
     },
@@ -23,7 +23,7 @@
       "sign": "悬疑",
       "experience": 884,
       "logins": 58,
-      "wealth": 2小时20分钟,
+      "wealth": 2h20min,
       "classify": "会员",
       "score": 8.8
     },
@@ -35,7 +35,7 @@
       "sign": "剧情",
       "experience": 650,
       "logins": 77,
-      "wealth": 2小时10分钟,
+      "wealth": 2h10min,
       "classify": "非会员",
       "score": 8.4
     },
@@ -47,7 +47,7 @@
       "sign": "武侠",
       "experience": 362,
       "logins": 157,
-      "wealth": 2小时15分钟,
+      "wealth": 2h15min,
       "classify": "会员",
       "score": 7.9
     },
@@ -59,7 +59,7 @@
       "sign": "剧情",
       "experience": 807,
       "logins": 51,
-      "wealth": 2小时13分钟,
+      "wealth": 2h13min,
       "classify": "会员",
       "score": 6
     },
@@ -71,7 +71,7 @@
       "sign": "科幻",
       "experience": 173,
       "logins": 68,
-      "wealth": 2小时18分钟,
+      "wealth": 2h18min,
       "classify": "会员",
       "score": 8.7
     },
@@ -83,7 +83,7 @@
       "sign": "剧情",
       "experience": 982,
       "logins": 37,
-      "wealth": 2小时18分钟,
+      "wealth": 2h18min,
       "classify": "会员",
       "score": 7.8
     },
@@ -95,7 +95,7 @@
       "sign": "剧情",
       "experience": 727,
       "logins": 150,
-      "wealth": 2小时15分钟,
+      "wealth": 2h15min,
       "classify": "会员",
       "score": 7.6
     },
@@ -107,7 +107,7 @@
       "sign": "剧情",
       "experience": 951,
       "logins": 133,
-      "wealth": 2小时17分钟,
+      "wealth": 2h17min,
       "classify": "会员",
       "score": 7.8
     },
@@ -119,8 +119,8 @@
       "sign": "签名-9",
       "experience": 484,
       "logins": 25,
-      "wealth": 86801934,
-      "classify": "词人",
+      "wealth": 2h15min,
+      "classify": "会员",
       "score": 7.5
     }
   ]
