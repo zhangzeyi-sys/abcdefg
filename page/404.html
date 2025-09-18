@@ -1,110 +1,436 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>404</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="Access-Control-Allow-Origin" content="*">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>违规用户处理模块</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <style>
-        .error .clip .shadow {height:180px;}
-        .error .clip:nth-of-type(2) .shadow {width:130px;}
-        .error .clip:nth-of-type(1) .shadow,.error .clip:nth-of-type(3) .shadow {width:250px;}
-        .error .digit {width:150px;height:150px;line-height:150px;font-size:120px;font-weight:bold;}
-        .error h2 {font-size:32px;}
-        .error .msg {top:-190px;left:30%;width:80px;height:80px;line-height:80px;font-size:32px;}
-        .error span.triangle {top:70%;right:0%;border-left:20px solid #535353;border-top:15px solid transparent;border-bottom:15px solid transparent;}
-        .error .container-error-404 {top: 50%;margin-top: 250px;position:relative;height:250px;padding-top:40px;}
-        .error .container-error-404 .clip {display:inline-block;transform:skew(-45deg);}
-        .error .clip .shadow {overflow:hidden;}
-        .error .clip:nth-of-type(2) .shadow {overflow:hidden;position:relative;box-shadow:inset 20px 0px 20px -15px rgba(150,150,150,0.8),20px 0px 20px -15px rgba(150,150,150,0.8);}
-        .error .clip:nth-of-type(3) .shadow:after,.error .clip:nth-of-type(1) .shadow:after {content:"";position:absolute;right:-8px;bottom:0px;z-index:9999;height:100%;width:10px;background:linear-gradient(90deg,transparent,rgba(173,173,173,0.8),transparent);border-radius:50%;}
-        .error .clip:nth-of-type(3) .shadow:after {left:-8px;}
-        .error .digit {position:relative;top:8%;color:white;background:#1E9FFF;border-radius:50%;display:inline-block;transform:skew(45deg);}
-        .error .clip:nth-of-type(2) .digit {left:-10%;}
-        .error .clip:nth-of-type(1) .digit {right:-20%;}
-        .error .clip:nth-of-type(3) .digit {left:-20%;}
-        .error h2 {font-size:24px;color:#A2A2A2;font-weight:bold;padding-bottom:20px;}
-        .error .tohome {font-size:16px;color:#07B3F9;}
-        .error .msg {position:relative;z-index:9999;display:block;background:#535353;color:#A2A2A2;border-radius:50%;font-style:italic;}
-        .error .triangle {position:absolute;z-index:999;transform:rotate(45deg);content:"";width:0;height:0;}
-        @media(max-width:767px) {.error .clip .shadow {height:100px;}
-            .error .clip:nth-of-type(2) .shadow {width:80px;}
-            .error .clip:nth-of-type(1) .shadow,.error .clip:nth-of-type(3) .shadow {width:100px;}
-            .error .digit {width:80px;height:80px;line-height:80px;font-size:52px;}
-            .error h2 {font-size:18px;}
-            .error .msg {top:-110px;left:15%;width:40px;height:40px;line-height:40px;font-size:18px;}
-            .error span.triangle {top:70%;right:-3%;border-left:10px solid #535353;border-top:8px solid transparent;border-bottom:8px solid transparent;}
-            .error .container-error-404 {height:150px;}
+        /* 基础样式 */
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Microsoft YaHei', sans-serif;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 标题样式 */
+        .page-title {
+            color: #333;
+            border-bottom: 2px solid #0d6efd;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        /* 模块卡片 */
+        .module-card {
+            background: #fff;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .card-header {
+            font-size: 18px;
+            font-weight: 500;
+            color: #444;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        .card-header i {
+            color: #0d6efd;
+            margin-right: 8px;
+        }
+
+        /* 搜索栏 */
+        .search-bar {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .search-btn {
+            padding: 8px 20px;
+            background: #0d6efd;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .search-btn:hover {
+            background: #0b5ed7;
+        }
+
+        /* 表格样式 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .data-table th {
+            background: #f1f5f9;
+            font-weight: 500;
+            color: #444;
+        }
+        .data-table tr:hover {
+            background: #f9fafb;
+        }
+
+        /* 操作按钮 */
+        .btn {
+            padding: 5px 12px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+        .btn-view {
+            background: #17a2b8;
+            color: #fff;
+        }
+        .btn-handle {
+            background: #ffc107;
+            color: #212529;
+        }
+        .btn-appeal {
+            background: #28a745;
+            color: #fff;
+        }
+
+        /* 状态标签 */
+        .status-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 13px;
+            color: #fff;
+        }
+        .status-pending {
+            background: #ffc107;
+        }
+        .status-handled {
+            background: #28a745;
+        }
+        .status-appealing {
+            background: #fd7e14;
+        }
+
+        /* 处理弹窗（简化版） */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        .modal-content {
+            background: #fff;
+            width: 90%;
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 20px;
+            border-radius: 6px;
+        }
+        .modal-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .modal-footer {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .btn-cancel {
+            background: #6c757d;
+            color: #fff;
+            margin-right: 10px;
+        }
+        .btn-confirm {
+            background: #dc3545;
+            color: #fff;
         }
     </style>
 </head>
 <body>
-<div class="error">
-    <div class="container-floud">
-        <div style="text-align: center">
-            <div class="container-error-404">
-                <div class="clip">
-                    <div class="shadow">
-                        <span class="digit thirdDigit"></span>
-                    </div>
+    <div class="container">
+        <h1 class="page-title">违规用户处理中心</h1>
+
+        <!-- 1. 违规用户查询模块 -->
+        <div class="module-card">
+            <div class="card-header">
+                <<i class="bi bi-search"></</i> 一、违规用户查询
+            </div>
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="输入用户名/用户ID/违规内容关键词">
+                <select class="search-input">
+                    <option value="">全部违规类型</option>
+                    <option value="spam">发布广告</option>
+                    <option value="malicious">恶意刷评</option>
+                    <option value="abuse">言语辱骂</option>
+                    <option value="fake">虚假评价</option>
+                </select>
+                <select class="search-input">
+                    <option value="">全部处理状态</option>
+                    <option value="pending">待处理</option>
+                    <option value="handled">已处理</option>
+                    <option value="appealing">申诉中</option>
+                </select>
+                <button class="search-btn">搜索</button>
+            </div>
+
+            <!-- 违规用户列表 -->
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <<th>用户ID</</th>
+                        <<th>用户名</</th>
+                        <<th>违规类型</</th>
+                        <<th>违规内容</</th>
+                        <<th>违规时间</</th>
+                        <<th>处理状态</</th>
+                        <<th>操作</</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>U10086</td>
+                        <td>电影爱好者2024</td>
+                        <td>恶意刷评</td>
+                        <td>短时间发布10条相同差评...</td>
+                        <td>2024-09-17 14:30</td>
+                        <td><span class="status-tag status-pending">待处理</span></td>
+                        <td>
+                            <button class="btn btn-view" onclick="openModal('view', 'U10086')">查看</button>
+                            <button class="btn btn-handle" onclick="openModal('handle', 'U10086')">处理</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>U10159</td>
+                        <td>影视推广小助手</td>
+                        <td>发布广告</td>
+                        <td>XX电影资源，加V获取...</td>
+                        <td>2024-09-17 10:15</td>
+                        <td><span class="status-tag status-handled">已处理</span></td>
+                        <td>
+                            <button class="btn btn-view" onclick="openModal('view', 'U10159')">查看</button>
+                            <button class="btn btn-appeal" onclick="openModal('appeal', 'U10159')">申诉</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>U10233</td>
+                        <td>吐槽大会选手</td>
+                        <td>言语辱骂</td>
+                        <td>演员演技烂，垃圾电影...</td>
+                        <td>2024-09-16 21:45</td>
+                        <td><span class="status-tag status-appealing">申诉中</span></td>
+                        <td>
+                            <button class="btn btn-view" onclick="openModal('view', 'U10233')">查看</button>
+                            <button class="btn btn-handle" onclick="openModal('handle', 'U10233')">复核</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 2. 违规处理记录模块 -->
+        <div class="module-card">
+            <div class="card-header">
+                <<i class="bi bi-journal-text"></</i> 二、违规处理记录
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <<th>处理ID</</th>
+                        <<th>用户ID</</th>
+                        <<th>违规类型</</th>
+                        <<th>处理方式</</th>
+                        <<th>处理时间</</th>
+                        <<th>处理人</</th>
+                        <<th>备注</</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>D2024091701</td>
+                        <td>U10159</td>
+                        <td>发布广告</td>
+                        <td>禁言7天</td>
+                        <td>2024-09-17 11:20</td>
+                        <td>审核员A</td>
+                        <td>首次违规，从轻处理</td>
+                    </tr>
+                    <tr>
+                        <td>D2024091605</td>
+                        <td>U10012</td>
+                        <td>虚假评价</td>
+                        <td>限制评价30天</td>
+                        <td>2024-09-16 16:40</td>
+                        <td>审核员B</td>
+                        <td>多次发布无依据好评</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. 申诉管理模块 -->
+        <div class="module-card">
+            <div class="card-header">
+                <<i class="bi bi-person-badge"></</i> 三、申诉管理
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <<th>申诉ID</</th>
+                        <<th>用户ID</</th>
+                        <<th>原处理方式</</th>
+                        <<th>申诉理由</</th>
+                        <<th>申诉时间</</th>
+                        <<th>申诉状态</</th>
+                        <<th>操作</</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A2024091703</td>
+                        <td>U10233</td>
+                        <td>禁言3天</td>
+                        <td>只是正常吐槽，未辱骂...</td>
+                        <td>2024-09-17 09:10</td>
+                        <td><span class="status-tag status-pending">待审核</span></td>
+                        <td>
+                            <button class="btn btn-view" onclick="openModal('appealView', 'A2024091703')">查看</button>
+                            <button class="btn btn-handle" onclick="openModal('appealHandle', 'A2024091703')">处理</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 处理弹窗（通用） -->
+        <div class="modal" id="myModal">
+            <div class="modal-content">
+                <h3 class="modal-title" id="modalTitle">违规处理</h3>
+                <div class="form-group">
+                    <label for="userId">用户ID</label>
+                    <input type="text" id="userId" class="form-control" readonly>
                 </div>
-                <div class="clip">
-                    <div class="shadow">
-                        <span class="digit secondDigit"></span>
-                    </div>
+                <div class="form-group" id="handleTypeGroup" style="display: none;">
+                    <label for="handleType">处理方式</label>
+                    <select id="handleType" class="form-control">
+                        <option value="warn">警告</option>
+                        <option value="mute7">禁言7天</option>
+                        <option value="mute30">禁言30天</option>
+                        <option value="limit">限制评价功能</option>
+                        <option value="ban">永久封号</option>
+                    </select>
                 </div>
-                <div class="clip">
-                    <div class="shadow">
-                        <span class="digit firstDigit"></span>
-                    </div>
+                <div class="form-group">
+                    <label for="handleRemark">处理备注</label>
+                    <textarea id="handleRemark" class="form-control" rows="3" placeholder="请输入处理说明（选填）"></textarea>
                 </div>
-                <div class="msg">OH!
-                    <span class="triangle"></span>
+                <div class="modal-footer">
+                    <button class="btn btn-cancel" onclick="closeModal()">取消</button>
+                    <button class="btn btn-confirm" onclick="confirmHandle()">确认</button>
                 </div>
             </div>
-            <h2 class="h1">很抱歉，你访问的页面找不到了</h2>
         </div>
     </div>
-</div>
-<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
-<script>
-    function randomNum() {
-        return Math.floor(Math.random() * 9) + 1;
-    }
 
-    var loop1, loop2, loop3, time = 30, i = 0, number;
-    loop3 = setInterval(function () {
-        if (i > 40) {
-            clearInterval(loop3);
-            document.querySelector('.thirdDigit').textContent = 4;
-        } else {
-            document.querySelector('.thirdDigit').textContent = randomNum();
-            i++;
+    <script>
+        // 打开弹窗
+        function openModal(type, id) {
+            const modal = document.getElementById('myModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const userId = document.getElementById('userId');
+            const handleTypeGroup = document.getElementById('handleTypeGroup');
+            
+            // 重置弹窗内容
+            userId.value = id;
+            document.getElementById('handleRemark').value = '';
+            
+            // 根据类型设置弹窗标题和显示项
+            switch(type) {
+                case 'view':
+                    modalTitle.textContent = '查看违规详情';
+                    handleTypeGroup.style.display = 'none';
+                    break;
+                case 'handle':
+                    modalTitle.textContent = '违规处理';
+                    handleTypeGroup.style.display = 'block';
+                    break;
+                case 'appeal':
+                    modalTitle.textContent = '查看申诉';
+                    handleTypeGroup.style.display = 'none';
+                    break;
+                case 'appealHandle':
+                    modalTitle.textContent = '处理申诉';
+                    handleTypeGroup.style.display = 'block';
+                    document.getElementById('handleType').innerHTML = `
+                        <option value="pass">申诉通过（撤销处罚）</option>
+                        <option value="reject">申诉驳回（维持原处罚）</option>
+                        <option value="adjust">调整处罚（改为警告）</option>
+                    `;
+                    break;
+            }
+            
+            modal.style.display = 'block';
         }
-    }, time);
-    loop2 = setInterval(function () {
-        if (i > 80) {
-            clearInterval(loop2);
-            document.querySelector('.secondDigit').textContent = 0;
-        } else {
-            document.querySelector('.secondDigit').textContent = randomNum();
-            i++;
+
+        // 关闭弹窗
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
         }
-    }, time);
-    loop1 = setInterval(function () {
-        if (i > 100) {
-            clearInterval(loop1);
-            document.querySelector('.firstDigit').textContent = 4;
-        } else {
-            document.querySelector('.firstDigit').textContent = randomNum();
-            i++;
+
+        // 确认处理（模拟）
+        function confirmHandle() {
+            alert('处理成功！');
+            closeModal();
+            // 实际项目中此处需对接后端接口更新数据
         }
-    }, time);
-</script>
+
+        // 点击弹窗外部关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('myModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
 </body>
 </html>
