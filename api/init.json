@@ -27,6 +27,12 @@
               "icon": "fa fa-tachometer",
               "target": "_self"
             },
+             {
+              "title": "分步表单",
+              "href": "page/form-step.html",
+              "icon": "fa fa-navicon",
+              "target": "_self"
+            }
             {
               "title": "数据分析",
               "href": "page/welcome-2.html",
