@@ -1,512 +1,811 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <title>layui</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
-    <link rel="stylesheet" href="../css/public.css" media="all">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电影评论 - 电影评价系统</title>
+    <!-- 引入Layui CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/layui-src/dist/css/layui.css">
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f2f3f5;
+        }
+        .header {
+            background-color: #23262E;
+            color: white;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        .logo i {
+            margin-right: 10px;
+            color: #FF5722;
+        }
+        .main-content {
+            padding: 30px 0;
+        }
+        .movie-header {
+            background-color: white;
+            padding: 30px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: flex-start;
+        }
+        .movie-poster {
+            width: 180px;
+            border-radius: 4px;
+        }
+        .movie-info {
+            flex: 1;
+            margin-left: 30px;
+        }
+        .movie-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        .movie-meta {
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+        .movie-actions {
+            margin-bottom: 20px;
+        }
+        .rating-stars .star {
+            color: #ccc;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .rating-stars .star.active {
+            color: #FFB800;
+        }
+        .review-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .review-user {
+            display: flex;
+            align-items: center;
+        }
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .review-time {
+            color: #999;
+            font-size: 14px;
+        }
+        .review-content {
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        .review-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .reply-box {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #e6e6e6;
+            display: none;
+        }
+        .reply-content {
+            width: 100%;
+            border: 1px solid #e6e6e6;
+            border-radius: 4px;
+            padding: 10px;
+            resize: none;
+            min-height: 80px;
+        }
+        .reply-actions {
+            margin-top: 10px;
+            text-align: right;
+        }
+        .replies {
+            margin-top: 15px;
+            padding-left: 20px;
+            border-left: 2px solid #f2f3f5;
+        }
+        .reply-item {
+            padding: 10px 0;
+            border-bottom: 1px dashed #f2f3f5;
+        }
+        .reply-item:last-child {
+            border-bottom: none;
+        }
+        .footer {
+            background-color: #23262E;
+            color: #999;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        .footer a {
+            color: #999;
+        }
+        .footer a:hover {
+            color: white;
+        }
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 <body>
-<div class="layuimini-container">
-    <div class="layuimini-main">
-
-        <blockquote class="layui-elem-quote layui-text">
-            鉴于小伙伴的普遍反馈，先温馨提醒两个常见“问题”：1. <a href="/doc/base/faq.html#form" target="_blank">为什么select/checkbox/radio没显示？</a> 2. <a href="/doc/modules/form.html#render" target="_blank">动态添加的表单元素如何更新？</a>
-        </blockquote>
-
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-            <legend>表单集合演示</legend>
-        </fieldset>
-
-        <form class="layui-form" action="">
-            <div class="layui-form-item">
-                <label class="layui-form-label">单行输入框</label>
-                <div class="layui-input-block">
-                    <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+    <!-- 头部导航 -->
+    <header class="header">
+        <div class="layui-container">
+            <div class="layui-row">
+                <div class="layui-col-md2">
+                    <a href="index.html" class="logo"><i class="fa fa-film"></i>电影评价</a>
+                </div>
+                <div class="layui-col-md8">
+                    <nav class="layui-nav layui-bg-transparent layui-float-right">
+                        <li class="layui-nav-item"><a href="index.html">首页</a></li>
+                        <li class="layui-nav-item"><a href="index.html#movies">电影列表</a></li>
+                        <li class="layui-nav-item layui-nav-itemed"><a href="index.html#reviews">用户评论</a></li>
+                        <li class="layui-nav-item"><a href="submit-review.html">发表评论</a></li>
+                        <li class="layui-nav-item"><a href="my-list.html">我的片单</a></li>
+                    </nav>
+                </div>
+                <div class="layui-col-md2" id="userNav">
+                    <!-- 用户导航将通过JS动态生成 -->
                 </div>
             </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">验证必填项</label>
-                <div class="layui-input-block">
-                    <input type="text" name="username" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
-                </div>
-            </div>
+        </div>
+    </header>
 
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">验证手机</label>
-                    <div class="layui-input-inline">
-                        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
+    <!-- 主要内容区 -->
+    <section class="main-content">
+        <div class="layui-container">
+            <!-- 电影信息 -->
+            <div class="movie-header">
+                <img src="" alt="电影海报" class="movie-poster" id="moviePoster">
+                <div class="movie-info">
+                    <h1 class="movie-title" id="movieTitle"></h1>
+                    <div class="rating-stars" id="movieRating">
+                        <!-- 评分星星将通过JS生成 -->
+                    </div>
+                    <div class="movie-meta" id="movieMeta">
+                        <!-- 电影元数据将通过JS生成 -->
+                    </div>
+                    <div class="movie-actions">
+                        <button class="layui-btn layui-btn-danger" id="writeReviewBtn">
+                            <i class="fa fa-comment"></i> 写评论
+                        </button>
+                        <button class="layui-btn layui-btn-normal" id="addToLisBtn">
+                            <i class="fa fa-plus"></i> 加入片单
+                        </button>
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">验证邮箱</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">多规则验证</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">验证日期</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">验证链接</label>
-                    <div class="layui-input-inline">
-                        <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">验证身份证</label>
-                <div class="layui-input-block">
-                    <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">自定义验证</label>
-                <div class="layui-input-inline">
-                    <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
-            </div>
-
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">范围</label>
-                    <div class="layui-input-inline" style="width: 100px;">
-                        <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-                    </div>
-                    <div class="layui-form-mid">-</div>
-                    <div class="layui-input-inline" style="width: 100px;">
-                        <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
+                <div class="layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">评分统计</div>
+                        <div class="layui-card-body">
+                            <div style="text-align: center; padding: 20px 0;">
+                                <div style="font-size: 40px; font-weight: bold; color: #FF5722;" id="averageRating">0</div>
+                                <div>平均分</div>
+                            </div>
+                            
+                            <div class="layui-progress" lay-showpercent="true" lay-filter="progress1">
+                                <div class="layui-progress-bar" lay-percent="42%"></div>
+                            </div>
+                            <div style="margin-top: 5px;">5星 (42%)</div>
+                            
+                            <div class="layui-progress" lay-showpercent="true" lay-filter="progress2" style="margin-top: 15px;">
+                                <div class="layui-progress-bar" lay-percent="31%"></div>
+                            </div>
+                            <div style="margin-top: 5px;">4星 (31%)</div>
+                            
+                            <div class="layui-progress" lay-showpercent="true" lay-filter="progress3" style="margin-top: 15px;">
+                                <div class="layui-progress-bar" lay-percent="18%"></div>
+                            </div>
+                            <div style="margin-top: 5px;">3星 (18%)</div>
+                            
+                            <div class="layui-progress" lay-showpercent="true" lay-filter="progress4" style="margin-top: 15px;">
+                                <div class="layui-progress-bar" lay-percent="6%"></div>
+                            </div>
+                            <div style="margin-top: 5px;">2星 (6%)</div>
+                            
+                            <div class="layui-progress" lay-showpercent="true" lay-filter="progress5" style="margin-top: 15px;">
+                                <div class="layui-progress-bar" lay-percent="3%"></div>
+                            </div>
+                            <div style="margin-top: 5px;">1星 (3%)</div>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">单行选择框</label>
-                <div class="layui-input-block">
-                    <select name="interest" lay-filter="aihao">
-                        <option value=""></option>
-                        <option value="0">写作</option>
-                        <option value="1" selected="">阅读</option>
-                        <option value="2">游戏</option>
-                        <option value="3">音乐</option>
-                        <option value="4">旅行</option>
-                    </select>
+            
+            <!-- 评论区标题 -->
+            <div class="layui-row">
+                <div class="layui-col-md12">
+                    <h2 class="layui-h2" id="reviewsCount">用户评论 (0)</h2>
+                    <hr>
                 </div>
             </div>
+            
+            <!-- 评论列表 -->
+            <div class="layui-row" id="reviewsContainer">
+                <!-- 评论内容将通过JavaScript动态生成 -->
+            </div>
+            
+            <!-- 分页 -->
+            <div class="layui-box layui-laypage layui-laypage-default" style="margin-top: 30px; text-align: center;">
+                <a href="javascript:;" class="layui-laypage-prev">上一页</a>
+                <span class="layui-laypage-curr"><em class="layui-laypage-em"></em><em>1</em></span>
+                <a href="javascript:;">2</a>
+                <a href="javascript:;">3</a>
+                <a href="javascript:;">4</a>
+                <a href="javascript:;">5</a>
+                <a href="javascript:;" class="layui-laypage-next">下一页</a>
+            </div>
+        </div>
+    </section>
 
-
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">分组选择框</label>
-                    <div class="layui-input-inline">
-                        <select name="quiz">
-                            <option value="">请选择问题</option>
-                            <optgroup label="城市记忆">
-                                <option value="你工作的第一个城市">你工作的第一个城市</option>
-                            </optgroup>
-                            <optgroup label="学生时代">
-                                <option value="你的工号">你的工号</option>
-                                <option value="你最喜欢的老师">你最喜欢的老师</option>
-                            </optgroup>
-                        </select>
-                    </div>
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="layui-container">
+            <div class="layui-row">
+                <div class="layui-col-md4">
+                    <h3 class="layui-h3" style="color: white; margin-bottom: 20px;">电影评价系统</h3>
+                    <p>分享你的观影体验，发现更多精彩电影</p>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">搜索选择框</label>
-                    <div class="layui-input-inline">
-                        <select name="modules" lay-verify="required" lay-search="">
-                            <option value="">直接选择或搜索选择</option>
-                            <option value="1">layer</option>
-                            <option value="2">form</option>
-                            <option value="3">layim</option>
-                            <option value="4">element</option>
-                            <option value="5">laytpl</option>
-                            <option value="6">upload</option>
-                            <option value="7">laydate</option>
-                            <option value="8">laypage</option>
-                            <option value="9">flow</option>
-                            <option value="10">util</option>
-                            <option value="11">code</option>
-                            <option value="12">tree</option>
-                            <option value="13">layedit</option>
-                            <option value="14">nav</option>
-                            <option value="15">tab</option>
-                            <option value="16">table</option>
-                            <option value="17">select</option>
-                            <option value="18">checkbox</option>
-                            <option value="19">switch</option>
-                            <option value="20">radio</option>
-                        </select>
+                <div class="layui-col-md4">
+                    <h3 class="layui-h3" style="color: white; margin-bottom: 20px;">快速链接</h3>
+                    <ul class="layui-nav layui-nav-tree layui-bg-transparent">
+                        <li class="layui-nav-item"><a href="index.html">首页</a></li>
+                        <li class="layui-nav-item"><a href="index.html#movies">电影列表</a></li>
+                        <li class="layui-nav-item"><a href="index.html#reviews">用户评论</a></li>
+                        <li class="layui-nav-item"><a href="submit-review.html">发表评论</a></li>
+                        <li class="layui-nav-item"><a href="my-list.html">我的片单</a></li>
+                    </ul>
+                </div>
+                <div class="layui-col-md4">
+                    <h3 class="layui-h3" style="color: white; margin-bottom: 20px;">联系我们</h3>
+                    <p><i class="fa fa-envelope"></i> contact@movierating.com</p>
+                    <p><i class="fa fa-phone"></i> 123-4567-8910</p>
+                    <div style="margin-top: 20px;">
+                        <a href="#" class="layui-btn layui-btn-primary layui-btn-circle"><i class="fa fa-weibo"></i></a>
+                        <a href="#" class="layui-btn layui-btn-primary layui-btn-circle"><i class="fa fa-wechat"></i></a>
+                        <a href="#" class="layui-btn layui-btn-primary layui-btn-circle"><i class="fa fa-qq"></i></a>
                     </div>
                 </div>
             </div>
+            <div class="layui-row" style="margin-top: 30px; text-align: center;">
+                <p>© 2023 电影评价系统 版权所有</p>
+            </div>
+        </div>
+    </footer>
 
-            <div class="layui-form-item">
-                <label class="layui-form-label">联动选择框</label>
-                <div class="layui-input-inline">
-                    <select name="quiz1">
-                        <option value="">请选择省</option>
-                        <option value="浙江" selected="">浙江省</option>
-                        <option value="你的工号">江西省</option>
-                        <option value="你最喜欢的老师">福建省</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline">
-                    <select name="quiz2">
-                        <option value="">请选择市</option>
-                        <option value="杭州">杭州</option>
-                        <option value="宁波" disabled="">宁波</option>
-                        <option value="温州">温州</option>
-                        <option value="温州">台州</option>
-                        <option value="温州">绍兴</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline">
-                    <select name="quiz3">
-                        <option value="">请选择县/区</option>
-                        <option value="西湖区">西湖区</option>
-                        <option value="余杭区">余杭区</option>
-                        <option value="拱墅区">临安市</option>
-                    </select>
-                </div>
-                <div class="layui-form-mid layui-word-aux">此处只是演示联动排版，并未做联动交互</div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">复选框</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="like[write]" title="写作">
-                    <input type="checkbox" name="like[read]" title="阅读" checked="">
-                    <input type="checkbox" name="like[game]" title="游戏">
-                </div>
-            </div>
-
-            <div class="layui-form-item" pane="">
-                <label class="layui-form-label">原始复选框</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="like1[write]" lay-skin="primary" title="写作" checked="">
-                    <input type="checkbox" name="like1[read]" lay-skin="primary" title="阅读">
-                    <input type="checkbox" name="like1[game]" lay-skin="primary" title="游戏" disabled="">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">开关-默认关</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">开关-默认开</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" lay-text="ON|OFF">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">单选框</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
-                    <input type="radio" name="sex" value="女" title="女">
-                    <input type="radio" name="sex" value="禁" title="禁用" disabled="">
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">普通文本域</label>
-                <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-                </div>
-            </div>
-            <!--<div class="layui-form-item layui-form-text">
-              <label class="layui-form-label">编辑器</label>
-              <div class="layui-input-block">
-                <textarea class="layui-textarea layui-hide" name="content" lay-verify="content" id="LAY_demo_editor"></textarea>
-              </div>
-            </div>-->
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-                </div>
-            </div>
-        </form>
-
-        <!-- 示例-970 -->
-        <ins class="adsbygoogle" style="display:inline-block;width:970px;height:90px" data-ad-client="ca-pub-6111334333458862" data-ad-slot="3820120620"></ins>
-
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-            <legend>初始赋值演示</legend>
-        </fieldset>
-
-        <form class="layui-form" action="" lay-filter="example">
-            <div class="layui-form-item">
-                <label class="layui-form-label">输入框</label>
-                <div class="layui-input-block">
-                    <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">密码框</label>
-                <div class="layui-input-block">
-                    <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">选择框</label>
-                <div class="layui-input-block">
-                    <select name="interest" lay-filter="aihao">
-                        <option value=""></option>
-                        <option value="0">写作</option>
-                        <option value="1">阅读</option>
-                        <option value="2">游戏</option>
-                        <option value="3">音乐</option>
-                        <option value="4">旅行</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">复选框</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="like[write]" title="写作">
-                    <input type="checkbox" name="like[read]" title="阅读">
-                    <input type="checkbox" name="like[daze]" title="发呆">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">开关</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">单选框</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
-                    <input type="radio" name="sex" value="女" title="女">
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">文本域</label>
-                <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" class="layui-textarea" name="desc"></textarea>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
-                </div>
-            </div>
-        </form>
-        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-            <legend>方框风格的表单集合</legend>
-        </fieldset>
-        <form class="layui-form layui-form-pane" action="">
-            <div class="layui-form-item">
-                <label class="layui-form-label">长输入框</label>
-                <div class="layui-input-block">
-                    <input type="text" name="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">短输入框</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="username" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">日期选择</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="date" id="date1" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">行内表单</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="number" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">密码</label>
-                <div class="layui-input-inline">
-                    <input type="password" name="password" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-mid layui-word-aux">请务必填写用户名</div>
-            </div>
-
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">范围</label>
-                    <div class="layui-input-inline" style="width: 100px;">
-                        <input type="text" name="price_min" placeholder="￥" autocomplete="off" class="layui-input">
-                    </div>
-                    <div class="layui-form-mid">-</div>
-                    <div class="layui-input-inline" style="width: 100px;">
-                        <input type="text" name="price_max" placeholder="￥" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">单行选择框</label>
-                <div class="layui-input-block">
-                    <select name="interest" lay-filter="aihao">
-                        <option value=""></option>
-                        <option value="0">写作</option>
-                        <option value="1" selected="">阅读</option>
-                        <option value="2">游戏</option>
-                        <option value="3">音乐</option>
-                        <option value="4">旅行</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">行内选择框</label>
-                <div class="layui-input-inline">
-                    <select name="quiz1">
-                        <option value="">请选择省</option>
-                        <option value="浙江" selected="">浙江省</option>
-                        <option value="你的工号">江西省</option>
-                        <option value="你最喜欢的老师">福建省</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline">
-                    <select name="quiz2">
-                        <option value="">请选择市</option>
-                        <option value="杭州">杭州</option>
-                        <option value="宁波" disabled="">宁波</option>
-                        <option value="温州">温州</option>
-                        <option value="温州">台州</option>
-                        <option value="温州">绍兴</option>
-                    </select>
-                </div>
-                <div class="layui-input-inline">
-                    <select name="quiz3">
-                        <option value="">请选择县/区</option>
-                        <option value="西湖区">西湖区</option>
-                        <option value="余杭区">余杭区</option>
-                        <option value="拱墅区">临安市</option>
-                    </select>
-                </div>
-            </div>
-            <div class="layui-form-item" pane="">
-                <label class="layui-form-label">开关-开</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" title="开关">
-                </div>
-            </div>
-            <div class="layui-form-item" pane="">
-                <label class="layui-form-label">单选框</label>
-                <div class="layui-input-block">
-                    <input type="radio" name="sex" value="男" title="男" checked="">
-                    <input type="radio" name="sex" value="女" title="女">
-                    <input type="radio" name="sex" value="禁" title="禁用" disabled="">
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">文本域</label>
-                <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <button class="layui-btn" lay-submit="" lay-filter="demo2">跳转式提交</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
-<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
-<script>
-    layui.use(['form', 'layedit', 'laydate'], function () {
-        var form = layui.form
-            , layer = layui.layer
-            , layedit = layui.layedit
-            , laydate = layui.laydate;
-
-        //日期
-        laydate.render({
-            elem: '#date'
-        });
-        laydate.render({
-            elem: '#date1'
-        });
-
-        //创建一个编辑器
-        var editIndex = layedit.build('LAY_demo_editor');
-
-        //自定义验证规则
-        form.verify({
-            title: function (value) {
-                if (value.length < 5) {
-                    return '标题至少得5个字符啊';
+    <!-- 引入Layui JS -->
+    <script src="https://cdn.jsdelivr.net/npm/layui-src/dist/layui.js"></script>
+    <script>
+        // 初始化Layui模块
+        layui.use(['element', 'form', 'layer'], function() {
+            var element = layui.element;
+            var form = layui.form;
+            var layer = layui.layer;
+            
+            // 电影数据
+            const moviesData = [
+                { 
+                    id: 1, 
+                    title: "星际探索：未知边界", 
+                    poster: "https://picsum.photos/id/1025/400/600", 
+                    rating: 4.5,
+                    director: "詹姆斯·格雷",
+                    genre: "科幻 / 冒险",
+                    releaseYear: 2019,
+                    description: "一位天才宇航员踏上了穿越太阳系的危险旅程，寻找失踪的父亲，并揭示可能威胁人类生存的宇宙秘密。"
+                },
+                { 
+                    id: 2, 
+                    title: "远山的呼唤", 
+                    poster: "https://picsum.photos/id/1011/400/600", 
+                    rating: 8.7,
+                    director: "山田洋次",
+                    genre: "剧情 / 爱情",
+                    releaseYear: 1980,
+                    description: "一段发生在山区的感人爱情故事，两个孤独的灵魂相互慰藉，共同面对生活的挑战。"
+                },
+                { 
+                    id: 3, 
+                    title: "城市迷宫", 
+                    poster: "https://picsum.photos/id/1005/400/600", 
+                    rating: 7.9,
+                    director: "丹尼斯·维伦纽瓦",
+                    genre: "悬疑 / 惊悚",
+                    releaseYear: 2016,
+                    description: "一名侦探在调查一系列离奇案件时，发现自己陷入了一个精心设计的城市迷宫。"
+                },
+                { 
+                    id: 4, 
+                    title: "海洋之心", 
+                    poster: "https://picsum.photos/id/1012/400/600", 
+                    rating: 9.2,
+                    director: "詹姆斯·卡梅隆",
+                    genre: "纪录片 / 自然",
+                    releaseYear: 2018,
+                    description: "探索地球上最神秘的海洋世界，记录海洋生物的精彩生活和令人惊叹的自然景观。"
+                },
+                { 
+                    id: 5, 
+                    title: "极速追击", 
+                    poster: "https://picsum.photos/id/1027/400/600", 
+                    rating: 8.1,
+                    director: "吕克·贝松",
+                    genre: "动作 / 犯罪",
+                    releaseYear: 2013,
+                    description: "一名前特工被迫重出江湖，在72小时内完成一系列不可能的任务，拯救被绑架的家人。"
                 }
+            ];
+            
+            // 评论数据
+            const reviewsData = {
+                1: [
+                    {
+                        id: 101,
+                        userId: 1001,
+                        userName: "李明",
+                        userAvatar: "https://picsum.photos/id/1062/100/100",
+                        rating: 5,
+                        time: "2小时前",
+                        content: "这部电影简直太棒了！视觉效果震撼，剧情紧凑，演员表演出色。尤其是太空探索的场景，让人身临其境。电影不仅讲述了一个关于探索的故事，更探讨了父子关系和人性的本质。强烈推荐！",
+                        usefulCount: 24,
+                        replies: [
+                            {
+                                id: 201,
+                                userId: 1003,
+                                userName: "王华",
+                                userAvatar: "https://picsum.photos/id/1074/100/100",
+                                time: "1小时前",
+                                content: "完全同意你的观点，特别是结局的处理太精彩了！"
+                            }
+                        ]
+                    },
+                    {
+                        id: 102,
+                        userId: 1004,
+                        userName: "赵丽",
+                        userAvatar: "https://picsum.photos/id/1069/100/100",
+                        rating: 4,
+                        time: "昨天",
+                        content: "布拉德·皮特的表演非常到位，把那种孤独和执着表现得淋漓尽致。影片的画面很美，但节奏偏慢，有些地方可以再紧凑一些。",
+                        usefulCount: 15,
+                        replies: []
+                    }
+                ],
+                2: [
+                    {
+                        id: 103,
+                        userId: 1005,
+                        userName: "张伟",
+                        userAvatar: "https://picsum.photos/id/1076/100/100",
+                        rating: 5,
+                        time: "3天前",
+                        content: "经典中的经典，高仓健和倍赏千惠子的表演太精彩了。那个年代的纯真爱情故事，现在看来依然动人。",
+                        usefulCount: 36,
+                        replies: []
+                    }
+                ],
+                3: [
+                    {
+                        id: 104,
+                        userId: 1006,
+                        userName: "刘强",
+                        userAvatar: "https://picsum.photos/id/1083/100/100",
+                        rating: 4,
+                        time: "1周前",
+                        content: "维伦纽瓦的电影总是这么有深度，画面构图也很讲究。虽然有些烧脑，但值得细细品味。",
+                        usefulCount: 21,
+                        replies: []
+                    }
+                ],
+                4: [
+                    {
+                        id: 105,
+                        userId: 1007,
+                        userName: "陈静",
+                        userAvatar: "https://picsum.photos/id/1084/100/100",
+                        rating: 5,
+                        time: "2周前",
+                        content: "太震撼了！水下摄影技术一流，让我看到了一个前所未见的海洋世界。每一帧都像壁纸一样精美。",
+                        usefulCount: 42,
+                        replies: []
+                    }
+                ],
+                5: [
+                    {
+                        id: 106,
+                        userId: 1008,
+                        userName: "杨光",
+                        userAvatar: "https://picsum.photos/id/1085/100/100",
+                        rating: 3,
+                        time: "3周前",
+                        content: "动作场面很精彩，但剧情有些老套，典型的好莱坞式爆米花电影，适合放松心情观看。",
+                        usefulCount: 9,
+                        replies: []
+                    }
+                ]
+            };
+            
+            // 页面加载完成后初始化
+            window.onload = function() {
+                // 初始化用户导航
+                initUserNav();
+                
+                // 获取电影ID
+                const urlParams = new URLSearchParams(window.location.search);
+                const movieId = urlParams.get('movie');
+                
+                if (!movieId) {
+                    // 如果没有电影ID，跳转到首页
+                    window.location.href = 'index.html';
+                    return;
+                }
+                
+                // 加载电影信息
+                loadMovieInfo(movieId);
+                
+                // 加载评论
+                loadReviews(movieId);
+                
+                // 初始化进度条
+                element.render('progress');
+            };
+            
+            // 初始化用户导航
+            function initUserNav() {
+                const userNavContainer = document.getElementById('userNav');
+                const currentUser = localStorage.getItem('currentUser');
+                
+                if (currentUser) {
+                    // 用户已登录
+                    userNavContainer.innerHTML = `
+                        <div class="nav-user">
+                            <img src="https://picsum.photos/id/1000/100/100" alt="用户头像" class="user-avatar">
+                            <div class="layui-nav layui-bg-transparent layui-inline">
+                                <li class="layui-nav-item">
+                                    <a href="javascript:;">${JSON.parse(currentUser).username}</a>
+                                    <dl class="layui-nav-child">
+                                        <dd><a href="my-list.html">我的片单</a></dd>
+                                        <dd><a href="javascript:logout()">退出登录</a></dd>
+                                    </dl>
+                                </li>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // 用户未登录
+                    userNavContainer.innerHTML = `
+                        <button class="layui-btn layui-btn-primary layui-float-right" onclick="window.location.href='login.html'">
+                            <i class="fa fa-user"></i> 登录
+                        </button>
+                    `;
+                }
+                
+                // 重新渲染导航
+                element.render('nav');
             }
-            , pass: [
-                /^[\S]{6,12}$/
-                , '密码必须6到12位，且不能出现空格'
-            ]
-            , content: function (value) {
-                layedit.sync(editIndex);
+            
+            // 加载电影信息
+            function loadMovieInfo(movieId) {
+                const movie = moviesData.find(m => m.id == movieId);
+                if (!movie) return;
+                
+                // 更新页面标题
+                document.title = `${movie.title} - 电影评价系统`;
+                
+                // 更新电影信息
+                document.getElementById('movieTitle').textContent = movie.title;
+                document.getElementById('moviePoster').src = movie.poster;
+                document.getElementById('moviePoster').alt = movie.title;
+                document.getElementById('averageRating').textContent = movie.rating;
+                
+                // 生成评分星星
+                const ratingContainer = document.getElementById('movieRating');
+                ratingContainer.innerHTML = generateStars(movie.rating) + `<span style="margin-left: 10px;">${movie.rating}分</span>`;
+                
+                // 生成电影元数据
+                const metaContainer = document.getElementById('movieMeta');
+                metaContainer.innerHTML = `
+                    <p><strong>导演：</strong>${movie.director}</p>
+                    <p><strong>类型：</strong>${movie.genre}</p>
+                    <p><strong>上映年份：</strong>${movie.releaseYear}</p>
+                    <p><strong>简介：</strong>${movie.description}</p>
+                `;
+                
+                // 设置按钮事件
+                document.getElementById('writeReviewBtn').onclick = function() {
+                    window.location.href = `submit-review.html?movie=${movieId}`;
+                };
+                
+                document.getElementById('addToLisBtn').onclick = function() {
+                    addToMyList(movieId, movie.title);
+                };
+            }
+            
+            // 加载评论
+            function loadReviews(movieId) {
+                const reviews = reviewsData[movieId] || [];
+                const container = document.getElementById('reviewsContainer');
+                
+                // 更新评论数量
+                document.getElementById('reviewsCount').textContent = `用户评论 (${reviews.length})`;
+                
+                if (reviews.length === 0) {
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 50px 20px; background-color: white; border-radius: 4px;">
+                            <i class="fa fa-comment-o" style="font-size: 50px; color: #ddd; margin-bottom: 20px;"></i>
+                            <p>暂无评论，快来发表第一条评论吧！</p>
+                            <button class="layui-btn layui-btn-primary" style="margin-top: 15px;" onclick="window.location.href='submit-review.html?movie=${movieId}'">
+                                发表评论
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // 生成评论HTML
+                let reviewsHtml = '';
+                reviews.forEach(review => {
+                    reviewsHtml += `
+                        <div class="review-item">
+                            <div class="review-header">
+                                <div class="review-user">
+                                    <img src="${review.userAvatar}" alt="${review.userName}" class="user-avatar">
+                                    <div>
+                                        <div>${review.userName}</div>
+                                        <div class="rating-stars" style="margin-top: 5px;">
+                                            ${generateStars(review.rating)}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="review-time">${review.time}</div>
+                            </div>
+                            <div class="review-content">${review.content}</div>
+                            <div class="review-actions">
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="likeReview(${review.id})">
+                                    <i class="fa fa-thumbs-up"></i> 有用(<span id="likeCount${review.id}">${review.usefulCount}</span>)
+                                </button>
+                                <button class="layui-btn layui-btn-primary layui-btn-sm" onclick="toggleReplyBox(${review.id})">
+                                    <i class="fa fa-comment-o"></i> 回复
+                                </button>
+                            </div>
+                            
+                            <!-- 回复框 -->
+                            <div class="reply-box" id="replyBox${review.id}">
+                                <textarea class="reply-content" placeholder="写下你的回复..."></textarea>
+                                <div class="reply-actions">
+                                    <button class="layui-btn layui-btn-primary" onclick="toggleReplyBox(${review.id})">取消</button>
+                                    <button class="layui-btn" onclick="submitReply(${review.id})">回复</button>
+                                </div>
+                            </div>
+                            
+                            <!-- 回复列表 -->
+                            <div class="replies" id="replies${review.id}">
+                                ${generateRepliesHtml(review.replies)}
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                container.innerHTML = reviewsHtml;
+            }
+            
+            // 生成回复HTML
+            function generateRepliesHtml(replies) {
+                if (!replies || replies.length === 0) return '';
+                
+                let repliesHtml = '';
+                replies.forEach(reply => {
+                    repliesHtml += `
+                        <div class="reply-item">
+                            <div class="review-user">
+                                <img src="${reply.userAvatar}" alt="${reply.userName}" class="user-avatar" style="width: 30px; height: 30px;">
+                                <div>
+                                    <div>${reply.userName} <span style="font-size: 12px; color: #999;">${reply.time}</span></div>
+                                    <div style="margin-top: 5px; font-size: 14px;">${reply.content}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                return repliesHtml;
+            }
+            
+            // 生成星星评分HTML
+            function generateStars(rating) {
+                let starsHtml = '';
+                const fullStars = Math.floor(rating);
+                const hasHalfStar = rating % 1 >= 0.5;
+                
+                // 全星
+                for (let i = 0; i < fullStars; i++) {
+                    starsHtml += '<i class="fa fa-star star active"></i>';
+                }
+                
+                // 半星
+                if (hasHalfStar) {
+                    starsHtml += '<i class="fa fa-star-half-o star active"></i>';
+                }
+                
+                // 空星
+                const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                for (let i = 0; i < emptyStars; i++) {
+                    starsHtml += '<i class="fa fa-star star"></i>';
+                }
+                
+                return starsHtml;
+            }
+            
+            // 退出登录
+            window.logout = function() {
+                localStorage.removeItem('currentUser');
+                window.location.reload();
             }
         });
-
-        //监听指定开关
-        form.on('switch(switchTest)', function (data) {
-            layer.msg('开关checked：' + (this.checked ? 'true' : 'false'), {
-                offset: '6px'
+        
+        // 添加到片单功能
+        function addToMyList(movieId, movieTitle) {
+            layui.use('layer', function() {
+                var layer = layui.layer;
+                
+                // 检查用户是否登录
+                if (!localStorage.getItem('currentUser')) {
+                    layer.confirm('加入片单需要先登录，是否立即登录？', {
+                        btn: ['登录', '取消']
+                    }, function() {
+                        window.location.href = `login.html?redirect=movie-reviews.html?movie=${movieId}`;
+                    });
+                    return;
+                }
+                
+                // 从localStorage获取现有片单
+                let myList = JSON.parse(localStorage.getItem('myMovieList') || '[]');
+                
+                // 检查电影是否已在片单中
+                const movieExists = myList.some(item => item.id == movieId);
+                
+                if (movieExists) {
+                    layer.msg('这部电影已经在你的片单中了', {icon: 3});
+                    return;
+                }
+                
+                // 添加到片单
+                myList.push({
+                    id: movieId,
+                    title: movieTitle,
+                    addedDate: new Date().toISOString()
+                });
+                
+                // 保存到localStorage
+                localStorage.setItem('myMovieList', JSON.stringify(myList));
+                
+                layer.msg('成功加入片单！', {icon: 1});
             });
-            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
-        });
-
-        //监听提交
-        form.on('submit(demo1)', function (data) {
-            layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
-            })
-            return false;
-        });
-
-        //表单初始赋值
-        form.val('example', {
-            "username": "贤心" // "name": "value"
-            , "password": "123456"
-            , "interest": 1
-            , "like[write]": true //复选框选中状态
-            , "close": true //开关状态
-            , "sex": "女"
-            , "desc": "我爱 layui"
-        })
-
-
-    });
-</script>
-
+        }
+        
+        // 点赞功能
+        window.likeReview = function(reviewId) {
+            layui.use('layer', function() {
+                var layer = layui.layer;
+                
+                // 检查用户是否登录
+                if (!localStorage.getItem('currentUser')) {
+                    layer.confirm('点赞需要先登录，是否立即登录？', {
+                        btn: ['登录', '取消']
+                    }, function() {
+                        window.location.href = 'login.html';
+                    });
+                    return;
+                }
+                
+                // 获取已点赞的评论ID列表
+                let likedReviews = JSON.parse(localStorage.getItem('likedReviews') || '[]');
+                
+                // 检查是否已经点赞
+                if (likedReviews.includes(reviewId)) {
+                    layer.msg('你已经点过赞了', {icon: 3});
+                    return;
+                }
+                
+                // 添加到已点赞列表
+                likedReviews.push(reviewId);
+                localStorage.setItem('likedReviews', JSON.stringify(likedReviews));
+                
+                // 更新点赞数量
+                const likeCountElement = document.getElementById('likeCount' + reviewId);
+                let currentCount = parseInt(likeCountElement.textContent);
+                likeCountElement.textContent = currentCount + 1;
+                
+                layer.msg('点赞成功', {icon: 1});
+            });
+        }
+        
+        // 显示/隐藏回复框
+        window.toggleReplyBox = function(reviewId) {
+            layui.use('layer', function() {
+                var layer = layui.layer;
+                
+                // 检查用户是否登录
+                if (!localStorage.getItem('currentUser')) {
+                    layer.confirm('回复需要先登录，是否立即登录？', {
+                        btn: ['登录', '取消']
+                    }, function() {
+                        window.location.href = 'login.html';
+                    });
+                    return;
+                }
+                
+                const replyBox = document.getElementById('replyBox' + reviewId);
+                replyBox.style.display = replyBox.style.display === 'block' ? 'none' : 'block';
+            });
+        }
+        
+        // 提交回复
+        window.submitReply = function(reviewId) {
+            layui.use('layer', function() {
+                var layer = layui.layer;
+                
+                const replyBox = document.getElementById('replyBox' + reviewId);
+                const replyContent = replyBox.querySelector('.reply-content').value.trim();
+                
+                if (!replyContent) {
+                    layer.msg('回复内容不能为空', {icon: 2});
+                    return;
+                }
+                
+                // 获取回复列表容器
+                const repliesContainer = document.getElementById('replies' + reviewId);
+                
+                // 创建新回复元素
+                const newReply = document.createElement('div');
+                newReply.className = 'reply-item';
+                newReply.innerHTML = `
+                    <div class="review-user">
+                        <img src="https://picsum.photos/id/1000/100/100" alt="你的头像" class="user-avatar" style="width: 30px; height: 30px;">
+                        <div>
+                            <div>我 <span style="font-size: 12px; color: #999;">刚刚</span></div>
+                            <div style="margin-top: 5px; font-size: 14px;">${replyContent}</div>
+                        </div>
+                    </div>
+                `;
+                
+                // 添加到回复列表
+                repliesContainer.prepend(newReply);
+                
+                // 清空回复框并隐藏
+                replyBox.querySelector('.reply-content').value = '';
+                replyBox.style.display = 'none';
+                
+                layer.msg('回复成功', {icon: 1});
+            });
+        }
+    </script>
 </body>
 </html>
