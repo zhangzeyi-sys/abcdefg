@@ -60,13 +60,13 @@
           "target": "_self"
         },
         {
-          "title": "表单管理",
+          "title": "评价系统",
           "href": "",
           "icon": "fa fa-calendar",
           "target": "_self",
           "child": [
             {
-              "title": "查看表单",
+              "title": "发表评价",
               "href": "page/form.html",
               "icon": "fa fa-list-alt",
               "target": "_self"
