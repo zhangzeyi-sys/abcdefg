@@ -1,106 +1,763 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <meta charset="utf-8">
-    <title>系统设置</title>
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="../lib/layui-v2.6.3/css/layui.css" media="all">
-    <link rel="stylesheet" href="../css/public.css" media="all">
-    <style>
-        .layui-form-item .layui-input-company {width: auto;padding-right: 10px;line-height: 38px;}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>电影评价管理系统</title>
+  <!-- 引入Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 引入Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <!-- 引入Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  
+  <!-- 配置Tailwind自定义颜色和字体 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#E50914', // 电影风格的红色主色调
+            secondary: '#0F172A',
+            accent: '#F59E0B', // 星级评分的黄色
+            dark: '#111827',
+            light: '#F9FAFB'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
+  
+  <!-- 自定义工具类 -->
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .card-hover {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+    }
+  </style>
 </head>
-<body>
-<div class="layuimini-container">
-    <div class="layuimini-main">
-
-        <div class="layui-form layuimini-form">
-            <div class="layui-form-item">
-                <label class="layui-form-label required">网站名称</label>
-                <div class="layui-input-block">
-                    <input type="text" name="sitename" lay-verify="required" lay-reqtext="网站域名不能为空" placeholder="请输入网站名称"  value="layuimini" class="layui-input">
-                    <tip>填写自己部署网站的名称。</tip>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label required">网站域名</label>
-                <div class="layui-input-block">
-                    <input type="text" name="domain" lay-verify="required" lay-reqtext="网站域名不能为空" placeholder="请输入网站域名"  value="http://layuimini.99php.cn" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item">
-                <label class="layui-form-label">缓存时间</label>
-                <div class="layui-input-inline" style="width: 80px;">
-                    <input type="text" name="cache" lay-verify="number" value="0" class="layui-input">
-                </div>
-                <div class="layui-input-inline layui-input-company">分钟</div>
-                <div class="layui-form-mid layui-word-aux">本地开发一般推荐设置为 0，线上环境建议设置为 10。</div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">最大文件上传</label>
-                <div class="layui-input-inline" style="width: 80px;">
-                    <input type="text" name="cache" lay-verify="number" value="2048" class="layui-input">
-                </div>
-                <div class="layui-input-inline layui-input-company">KB</div>
-                <div class="layui-form-mid layui-word-aux">提示：1 M = 1024 KB</div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">上传文件类型</label>
-                <div class="layui-input-block">
-                    <input type="text" name="cache" value="png|gif|jpg|jpeg|zip|rar" class="layui-input">
-                </div>
-            </div>
-
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label required">首页标题</label>
-                <div class="layui-input-block">
-                    <textarea name="title" class="layui-textarea">layuimini 简洁易用后台管理模板</textarea>
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">META关键词</label>
-                <div class="layui-input-block">
-                    <textarea name="keywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割"></textarea>
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label">META描述</label>
-                <div class="layui-input-block">
-                    <textarea name="descript" class="layui-textarea">layuimini，最简洁、清爽、易用的layui后台框架模板。</textarea>
-                </div>
-            </div>
-            <div class="layui-form-item layui-form-text">
-                <label class="layui-form-label required">版权信息</label>
-                <div class="layui-input-block">
-                    <textarea name="copyright" class="layui-textarea">© 2019 layuimini.99php.cn MIT license</textarea>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn layui-btn-normal" lay-submit lay-filter="setting">确认保存</button>
-                </div>
-            </div>
+<body class="bg-gray-50 font-sans text-gray-800 min-h-screen flex flex-col">
+  <!-- 顶部导航栏 -->
+  <header class="bg-secondary text-white sticky top-0 z-50 shadow-lg transition-all duration-300">
+    <div class="container mx-auto px-4">
+      <div class="flex items-center justify-between h-16">
+        <!-- 左侧Logo和标题 -->
+        <div class="flex items-center space-x-3">
+          <div class="bg-primary p-2 rounded-lg">
+            <i class="fa fa-film text-xl"></i>
+          </div>
+          <div>
+            <h1 class="text-lg font-bold">电影评价管理系统</h1>
+            <p class="text-xs text-gray-300">管理用户对电影的评价与反馈</p>
+          </div>
         </div>
+        
+        <!-- 右侧用户信息和操作 -->
+        <div class="flex items-center space-x-6">
+          <button class="text-gray-300 hover:text-white transition-colors relative">
+            <i class="fa fa-bell-o text-lg"></i>
+            <span class="absolute -top-1 -right-1 bg-primary text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">3</span>
+          </button>
+          <div class="flex items-center space-x-2">
+            <img src="https://picsum.photos/id/1005/40/40" alt="管理员头像" class="w-8 h-8 rounded-full object-cover border border-gray-600">
+            <span class="text-sm font-medium">管理员</span>
+            <i class="fa fa-angle-down text-gray-400 text-xs"></i>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-<script src="../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
-<script>
-    layui.use(['form'], function () {
-        var form = layui.form
-            , layer = layui.layer;
+  </header>
 
-        //监听提交
-        form.on('submit(setting)', function (data) {
-            parent.layer.alert(JSON.stringify(data.field), {
-                title: '最终的提交信息'
-            });
-            return false;
+  <!-- 主要内容区域 -->
+  <main class="flex-1 container mx-auto px-4 py-6">
+    <!-- 页面标题和操作按钮 -->
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 gap-4">
+      <div>
+        <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-dark">电影评价管理</h2>
+        <p class="text-gray-500 mt-1">查看和管理用户对电影的所有评价内容</p>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <div class="relative">
+          <input type="text" placeholder="搜索电影或评价内容..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all text-sm w-full md:w-64">
+          <i class="fa fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+        </div>
+        <button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg transition-all flex items-center gap-2 text-sm">
+          <i class="fa fa-download"></i>
+          <span>导出数据</span>
+        </button>
+      </div>
+    </div>
+    
+    <!-- 统计卡片区域 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <!-- 总评价数 -->
+      <div class="bg-white rounded-xl p-5 shadow-md card-hover">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-gray-500 text-sm mb-1">总评价数</p>
+            <h3 class="text-2xl font-bold">12,845</h3>
+            <p class="text-green-500 text-xs mt-2 flex items-center">
+              <i class="fa fa-arrow-up mr-1"></i> 8.2% <span class="text-gray-500 ml-1">较上月</span>
+            </p>
+          </div>
+          <div class="bg-primary/10 p-3 rounded-lg text-primary">
+            <i class="fa fa-comment text-xl"></i>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 平均评分 -->
+      <div class="bg-white rounded-xl p-5 shadow-md card-hover">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-gray-500 text-sm mb-1">平台平均评分</p>
+            <h3 class="text-2xl font-bold">3.8 <span class="text-accent text-lg">★</span></h3>
+            <p class="text-green-500 text-xs mt-2 flex items-center">
+              <i class="fa fa-arrow-up mr-1"></i> 0.2 <span class="text-gray-500 ml-1">较上月</span>
+            </p>
+          </div>
+          <div class="bg-accent/10 p-3 rounded-lg text-accent">
+            <i class="fa fa-star text-xl"></i>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 待审核评价 -->
+      <div class="bg-white rounded-xl p-5 shadow-md card-hover">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-gray-500 text-sm mb-1">待审核评价</p>
+            <h3 class="text-2xl font-bold">256</h3>
+            <p class="text-red-500 text-xs mt-2 flex items-center">
+              <i class="fa fa-arrow-up mr-1"></i> 12.3% <span class="text-gray-500 ml-1">较上月</span>
+            </p>
+          </div>
+          <div class="bg-yellow-100 p-3 rounded-lg text-yellow-500">
+            <i class="fa fa-clock-o text-xl"></i>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 今日新增 -->
+      <div class="bg-white rounded-xl p-5 shadow-md card-hover">
+        <div class="flex items-start justify-between">
+          <div>
+            <p class="text-gray-500 text-sm mb-1">今日新增评价</p>
+            <h3 class="text-2xl font-bold">142</h3>
+            <p class="text-green-500 text-xs mt-2 flex items-center">
+              <i class="fa fa-arrow-up mr-1"></i> 5.7% <span class="text-gray-500 ml-1">较昨日</span>
+            </p>
+          </div>
+          <div class="bg-green-100 p-3 rounded-lg text-green-500">
+            <i class="fa fa-calendar-plus-o text-xl"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 图表和筛选区域 -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+      <!-- 评分分布图表 -->
+      <div class="bg-white rounded-xl p-5 shadow-md lg:col-span-1">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-semibold text-dark">评分分布</h3>
+          <div class="text-xs text-gray-500">全平台</div>
+        </div>
+        <div class="h-64">
+          <canvas id="ratingChart"></canvas>
+        </div>
+      </div>
+      
+      <!-- 筛选条件 -->
+      <div class="bg-white rounded-xl p-5 shadow-md lg:col-span-2">
+        <h3 class="font-semibold text-dark mb-4">筛选条件</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- 电影筛选 -->
+          <div>
+            <label class="block text-xs text-gray-500 mb-2">电影名称</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all">
+              <option value="">全部电影</option>
+              <option value="movie1">奥本海默</option>
+              <option value="movie2">芭比</option>
+              <option value="movie3">银河护卫队3</option>
+              <option value="movie4">蜘蛛侠：纵横宇宙</option>
+              <option value="movie5">铃芽之旅</option>
+            </select>
+          </div>
+          
+          <!-- 评分筛选 -->
+          <div>
+            <label class="block text-xs text-gray-500 mb-2">评分</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all">
+              <option value="">全部评分</option>
+              <option value="5">5星</option>
+              <option value="4">4星</option>
+              <option value="3">3星</option>
+              <option value="2">2星</option>
+              <option value="1">1星</option>
+            </select>
+          </div>
+          
+          <!-- 状态筛选 -->
+          <div>
+            <label class="block text-xs text-gray-500 mb-2">状态</label>
+            <select class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all">
+              <option value="">全部状态</option>
+              <option value="pending">待审核</option>
+              <option value="approved">已通过</option>
+              <option value="rejected">已拒绝</option>
+            </select>
+          </div>
+          
+          <!-- 日期范围 -->
+          <div>
+            <label class="block text-xs text-gray-500 mb-2">日期范围</label>
+            <input type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all">
+          </div>
+        </div>
+        
+        <div class="flex justify-end mt-4 gap-3">
+          <button class="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all text-sm">
+            重置
+          </button>
+          <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-all text-sm">
+            应用筛选
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 热门电影评分概览 -->
+    <div class="bg-white rounded-xl shadow-md mb-6 overflow-hidden">
+      <div class="p-5 border-b border-gray-200">
+        <h3 class="font-semibold text-dark">热门电影评分概览</h3>
+      </div>
+      
+      <div class="p-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <!-- 电影1 -->
+        <div class="flex gap-3 card-hover rounded-lg p-3">
+          <img src="https://picsum.photos/id/96/100/150" alt="奥本海默电影海报" class="w-20 h-30 object-cover rounded shadow">
+          <div class="flex-1">
+            <h4 class="font-medium text-dark truncate">奥本海默</h4>
+            <div class="flex items-center text-accent text-sm mt-1">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-half-o"></i>
+              <span class="text-gray-500 ml-1">4.5</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">评价数: 1,256</p>
+            <button class="text-primary text-xs mt-2 hover:underline">查看详情</button>
+          </div>
+        </div>
+        
+        <!-- 电影2 -->
+        <div class="flex gap-3 card-hover rounded-lg p-3">
+          <img src="https://picsum.photos/id/26/100/150" alt="芭比电影海报" class="w-20 h-30 object-cover rounded shadow">
+          <div class="flex-1">
+            <h4 class="font-medium text-dark truncate">芭比</h4>
+            <div class="flex items-center text-accent text-sm mt-1">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-o"></i>
+              <span class="text-gray-500 ml-1">4.0</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">评价数: 2,103</p>
+            <button class="text-primary text-xs mt-2 hover:underline">查看详情</button>
+          </div>
+        </div>
+        
+        <!-- 电影3 -->
+        <div class="flex gap-3 card-hover rounded-lg p-3">
+          <img src="https://picsum.photos/id/65/100/150" alt="银河护卫队3电影海报" class="w-20 h-30 object-cover rounded shadow">
+          <div class="flex-1">
+            <h4 class="font-medium text-dark truncate">银河护卫队3</h4>
+            <div class="flex items-center text-accent text-sm mt-1">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-o"></i>
+              <span class="text-gray-500 ml-1">4.2</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">评价数: 1,876</p>
+            <button class="text-primary text-xs mt-2 hover:underline">查看详情</button>
+          </div>
+        </div>
+        
+        <!-- 电影4 -->
+        <div class="flex gap-3 card-hover rounded-lg p-3">
+          <img src="https://picsum.photos/id/42/100/150" alt="蜘蛛侠：纵横宇宙电影海报" class="w-20 h-30 object-cover rounded shadow">
+          <div class="flex-1">
+            <h4 class="font-medium text-dark truncate">蜘蛛侠：纵横宇宙</h4>
+            <div class="flex items-center text-accent text-sm mt-1">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-half-o"></i>
+              <span class="text-gray-500 ml-1">4.7</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-2">评价数: 2,451</p>
+            <button class="text-primary text-xs mt-2 hover:underline">查看详情</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 评价列表 -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+      <div class="p-5 border-b border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <h3 class="font-semibold text-dark">最新电影评价</h3>
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-gray-500">排序方式:</span>
+          <select class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all">
+            <option value="newest">最新发布</option>
+            <option value="highest">评分最高</option>
+            <option value="lowest">评分最低</option>
+            <option value="mostliked">最多点赞</option>
+          </select>
+        </div>
+      </div>
+      
+      <!-- 评价列表内容 -->
+      <div class="divide-y divide-gray-200 max-h-[600px] overflow-y-auto scrollbar-hide">
+        <!-- 评价项1 -->
+        <div class="p-5 hover:bg-gray-50 transition-colors">
+          <div class="flex flex-col md:flex-row md:items-start gap-4">
+            <!-- 电影信息 -->
+            <div class="flex-shrink-0 w-full md:w-24">
+              <img src="https://picsum.photos/id/96/120/180" alt="奥本海默电影海报" class="w-full h-32 object-cover rounded shadow">
+              <h4 class="font-medium text-dark text-sm mt-2 truncate">奥本海默</h4>
+            </div>
+            
+            <!-- 评价内容 -->
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                <div class="flex items-center gap-3">
+                  <img src="https://picsum.photos/id/1012/40/40" alt="用户头像" class="w-8 h-8 rounded-full object-cover">
+                  <h4 class="font-medium text-dark">李小明</h4>
+                </div>
+                <div class="text-sm">
+                  <div class="flex items-center text-accent inline-block mr-3">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <span class="text-gray-500 ml-1">5.0</span>
+                  </div>
+                  <span class="text-gray-500">2023-08-15 19:30</span>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <p class="text-gray-700">诺兰的这部作品真是太震撼了！无论是剧情、摄影还是配乐都堪称完美。基里安·墨菲的表演令人难忘，将奥本海默的复杂内心世界展现得淋漓尽致。三个小时的片长一点都不觉得长，强烈推荐！</p>
+              </div>
+              
+              <!-- 评价图片 -->
+              <div class="flex gap-2 mb-4 flex-wrap">
+                <img src="https://picsum.photos/id/237/100/100" alt="电影截图1" class="w-20 h-20 object-cover rounded shadow">
+                <img src="https://picsum.photos/id/239/100/100" alt="电影截图2" class="w-20 h-20 object-cover rounded shadow">
+              </div>
+              
+              <!-- 评价互动数据 -->
+              <div class="flex items-center text-gray-500 text-sm mb-4">
+                <span class="flex items-center mr-4 cursor-pointer hover:text-primary transition-colors">
+                  <i class="fa fa-thumbs-up mr-1"></i> 128
+                </span>
+                <span class="flex items-center mr-4 cursor-pointer hover:text-primary transition-colors">
+                  <i class="fa fa-comment-o mr-1"></i> 32
+                </span>
+                <span class="text-xs px-2 py-0.5 bg-green-100 text-green-600 rounded-full">已通过</span>
+              </div>
+              
+              <!-- 操作按钮 -->
+              <div class="flex flex-wrap justify-end gap-2">
+                <button class="text-primary hover:text-primary/80 text-sm transition-colors">
+                  <i class="fa fa-reply mr-1"></i> 回复
+                </button>
+                <button class="text-yellow-500 hover:text-yellow-600 text-sm transition-colors">
+                  <i class="fa fa-flag mr-1"></i> 标记
+                </button>
+                <button class="text-red-500 hover:text-red-600 text-sm transition-colors">
+                  <i class="fa fa-trash mr-1"></i> 删除
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 评价项2 -->
+        <div class="p-5 hover:bg-gray-50 transition-colors">
+          <div class="flex flex-col md:flex-row md:items-start gap-4">
+            <!-- 电影信息 -->
+            <div class="flex-shrink-0 w-full md:w-24">
+              <img src="https://picsum.photos/id/26/120/180" alt="芭比电影海报" class="w-full h-32 object-cover rounded shadow">
+              <h4 class="font-medium text-dark text-sm mt-2 truncate">芭比</h4>
+            </div>
+            
+            <!-- 评价内容 -->
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                <div class="flex items-center gap-3">
+                  <img src="https://picsum.photos/id/1027/40/40" alt="用户头像" class="w-8 h-8 rounded-full object-cover">
+                  <h4 class="font-medium text-dark">张雨晴</h4>
+                </div>
+                <div class="text-sm">
+                  <div class="flex items-center text-accent inline-block mr-3">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <span class="text-gray-500 ml-1">3.0</span>
+                  </div>
+                  <span class="text-gray-500">2023-08-14 15:45</span>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <p class="text-gray-700">色彩非常丰富，音乐也很欢快，但剧情有点单薄。作为一部女性主题的电影，传递的价值观很积极，但感觉可以挖解得更深一些。玛格特·罗比和瑞恩·高斯林的表演很到位，这是最大的亮点。</p>
+              </div>
+              
+              <!-- 评价互动数据 -->
+              <div class="flex items-center text-gray-500 text-sm mb-4">
+                <span class="flex items-center mr-4 cursor-pointer hover:text-primary transition-colors">
+                  <i class="fa fa-thumbs-up mr-1"></i> 86
+                </span>
+                <span class="flex items-center mr-4 cursor-pointer hover:text-primary transition-colors">
+                  <i class="fa fa-comment-o mr-1"></i> 15
+                </span>
+                <span class="text-xs px-2 py-0.5 bg-yellow-100 text-yellow-600 rounded-full">待审核</span>
+              </div>
+              
+              <!-- 操作按钮 -->
+              <div class="flex flex-wrap justify-end gap-2">
+                <button class="text-primary hover:text-primary/80 text-sm transition-colors">
+                  <i class="fa fa-reply mr-1"></i> 回复
+                </button>
+                <button class="text-green-500 hover:text-green-600 text-sm transition-colors">
+                  <i class="fa fa-check mr-1"></i> 通过
+                </button>
+                <button class="text-red-500 hover:text-red-600 text-sm transition-colors">
+                  <i class="fa fa-times mr-1"></i> 拒绝
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 评价项3 -->
+        <div class="p-5 hover:bg-gray-50 transition-colors">
+          <div class="flex flex-col md:flex-row md:items-start gap-4">
+            <!-- 电影信息 -->
+            <div class="flex-shrink-0 w-full md:w-24">
+              <img src="https://picsum.photos/id/42/120/180" alt="蜘蛛侠：纵横宇宙电影海报" class="w-full h-32 object-cover rounded shadow">
+              <h4 class="font-medium text-dark text-sm mt-2 truncate">蜘蛛侠：纵横宇宙</h4>
+            </div>
+            
+            <!-- 评价内容 -->
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                <div class="flex items-center gap-3">
+                  <img src="https://picsum.photos/id/1025/40/40" alt="用户头像" class="w-8 h-8 rounded-full object-cover">
+                  <h4 class="font-medium text-dark">王建国</h4>
+                </div>
+                <div class="text-sm">
+                  <div class="flex items-center text-accent inline-block mr-3">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-half-o"></i>
+                    <span class="text-gray-500 ml-1">4.5</span>
+                  </div>
+                  <span class="text-gray-500">2023-08-12 20:15</span>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <p class="text-gray-700">视觉风格太惊艳了！每一帧都像艺术品一样，色彩和构图大胆创新。故事情节紧凑，角色塑造饱满，尤其是迈尔斯和格温的关系发展很动人。唯一的遗憾是这只是上部，看完让人迫不及待想看下一部！</p>
+              </div>
+              
+              <!-- 评价图片 -->
+              <div class="flex gap-2 mb-4 flex-wrap">
+                <img src="https://picsum.photos/id/119/100/100" alt="电影截图" class="w-20 h-20 object-cover rounded shadow">
+                <img src="https://picsum.photos/id/129/100/100" alt="电影截图" class="w-20 h-20 object-cover rounded shadow">
+                <img src="https://picsum.photos/id/139/100/100" alt="电影截图" class="w-20 h-20 object-cover rounded shadow">
+              </div>
+              
+              <!-- 评价互动数据 -->
+              <div class="flex items-center text-gray-500 text-sm mb-4">
+                <span class="flex items-center mr-4 cursor-pointer hover:text-primary transition-colors">
+                  <i class="fa fa-thumbs-up mr-1"></i> 256
+                </span>
+                <span class="flex items-center mr-4 cursor-pointer hover:text-primary transition-colors">
+                  <i class="fa fa-comment-o mr-1"></i> 48
+                </span>
+                <span class="text-xs px-2 py-0.5 bg-green-100 text-green-600 rounded-full">已通过</span>
+              </div>
+              
+              <!-- 操作按钮 -->
+              <div class="flex flex-wrap justify-end gap-2">
+                <button class="text-primary hover:text-primary/80 text-sm transition-colors">
+                  <i class="fa fa-reply mr-1"></i> 回复
+                </button>
+                <button class="text-yellow-500 hover:text-yellow-600 text-sm transition-colors">
+                  <i class="fa fa-flag mr-1"></i> 标记
+                </button>
+                <button class="text-red-500 hover:text-red-600 text-sm transition-colors">
+                  <i class="fa fa-trash mr-1"></i> 删除
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 评价项4 -->
+        <div class="p-5 hover:bg-gray-50 transition-colors">
+          <div class="flex flex-col md:flex-row md:items-start gap-4">
+            <!-- 电影信息 -->
+            <div class="flex-shrink-0 w-full md:w-24">
+              <img src="https://picsum.photos/id/65/120/180" alt="银河护卫队3电影海报" class="w-full h-32 object-cover rounded shadow">
+              <h4 class="font-medium text-dark text-sm mt-2 truncate">银河护卫队3</h4>
+            </div>
+            
+            <!-- 评价内容 -->
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-2">
+                <div class="flex items-center gap-3">
+                  <img src="https://picsum.photos/id/1062/40/40" alt="用户头像" class="w-8 h-8 rounded-full object-cover">
+                  <h4 class="font-medium text-dark">刘芳</h4>
+                </div>
+                <div class="text-sm">
+                  <div class="flex items-center text-accent inline-block mr-3">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <span class="text-gray-500 ml-1">2.0</span>
+                  </div>
+                  <span class="text-gray-500">2023-08-10 14:20</span>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <p class="text-gray-700">令人失望的终章，剧情杂乱无章，笑点也不如前两部有趣。火箭浣熊的背景故事虽然感人，但整体节奏拖沓，反派塑造也很平庸。作为系列的终结篇，感觉没有达到预期，有点虎头蛇尾。</p>
+              </div>
+              
+              <!-- 评价互动数据 -->
+              <div class="flex items-center text-gray-500 text-sm mb-4">
+                <span class="flex items-center mr-4 cursor-pointer hover:text-primary transition-colors">
+                  <i class="fa fa-thumbs-up mr-1"></i> 42
+                </span>
+                <span class="flex items-center mr-4 cursor-pointer hover:text-primary transition-colors">
+                  <i class="fa fa-comment-o mr-1"></i> 23
+                </span>
+                <span class="text-xs px-2 py-0.5 bg-red-100 text-red-600 rounded-full">已拒绝</span>
+              </div>
+              
+              <!-- 操作按钮 -->
+              <div class="flex flex-wrap justify-end gap-2">
+                <button class="text-primary hover:text-primary/80 text-sm transition-colors">
+                  <i class="fa fa-reply mr-1"></i> 回复
+                </button>
+                <button class="text-green-500 hover:text-green-600 text-sm transition-colors">
+                  <i class="fa fa-check mr-1"></i> 恢复
+                </button>
+                <button class="text-red-500 hover:text-red-600 text-sm transition-colors">
+                  <i class="fa fa-trash mr-1"></i> 删除
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 分页 -->
+      <div class="p-5 border-t border-gray-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div class="text-sm text-gray-500">
+          显示 <span class="font-medium text-dark">1-4</span> 条，共 <span class="font-medium text-dark">1,256</span> 条
+        </div>
+        <div class="flex items-center">
+          <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 text-gray-500 hover:border-primary hover:text-primary transition-colors mr-1">
+            <i class="fa fa-angle-left"></i>
+          </button>
+          <button class="w-9 h-9 flex items-center justify-center rounded bg-primary text-white">1</button>
+          <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 hover:border-primary hover:text-primary transition-colors">2</button>
+          <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 hover:border-primary hover:text-primary transition-colors">3</button>
+          <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 hover:border-primary hover:text-primary transition-colors">4</button>
+          <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 hover:border-primary hover:text-primary transition-colors">5</button>
+          <button class="w-9 h-9 flex items-center justify-center rounded border border-gray-300 text-gray-500 hover:border-primary hover:text-primary transition-colors ml-1">
+            <i class="fa fa-angle-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- 页脚 -->
+  <footer class="bg-secondary text-gray-300 py-6 mt-8">
+    <div class="container mx-auto px-4">
+      <div class="text-center text-sm">
+        © 2023 电影评价管理系统 | 版权所有
+      </div>
+    </div>
+  </footer>
+  
+  <!-- 审核评价模态框 (默认隐藏) -->
+  <div id="reviewModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center p-4">
+    <div class="bg-white rounded-xl w-full max-w-md shadow-lg">
+      <div class="p-5 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="font-semibold text-dark">审核评价</h3>
+        <button id="closeModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <div class="p-5">
+        <div class="bg-gray-50 p-3 rounded-lg mb-4">
+          <p class="text-sm text-gray-700">"色彩非常丰富，音乐也很欢快，但剧情有点单薄。作为一部女性主题的电影，传递的价值观很积极，但感觉可以挖解得更深一些。"</p>
+          <div class="flex items-center mt-2">
+            <img src="https://picsum.photos/id/1027/30/30" alt="用户头像" class="w-6 h-6 rounded-full object-cover mr-2">
+            <span class="text-xs text-gray-500">张雨晴 评价了 芭比</span>
+          </div>
+        </div>
+        
+        <div class="mb-4">
+          <label class="block text-sm font-medium text-gray-700 mb-2">审核意见 (可选)</label>
+          <textarea rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-all resize-none text-sm" placeholder="请输入审核意见..."></textarea>
+        </div>
+        
+        <div class="flex justify-end gap-3">
+          <button id="cancelReview" class="border border-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-50 transition-all text-sm">
+            取消
+          </button>
+          <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-all text-sm mr-2">
+            通过
+          </button>
+          <button class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all text-sm">
+            拒绝
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // 初始化评分分布图表
+    document.addEventListener('DOMContentLoaded', function() {
+      const ctx = document.getElementById('ratingChart').getContext('2d');
+      
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['5星', '4星', '3星', '2星', '1星'],
+          datasets: [{
+            data: [35, 28, 18, 10, 9],
+            backgroundColor: [
+              '#E50914',
+              '#F87171',
+              '#FBBF24',
+              '#94A3B8',
+              '#64748B'
+            ],
+            borderWidth: 0,
+            hoverOffset: 4
+          }]
+        },
+        options: {
+          cutout: '70%',
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 15,
+                boxWidth: 10,
+                usePointStyle: true,
+                pointStyle: 'circle'
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `${context.label}: ${context.raw}%`;
+                }
+              }
+            }
+          },
+          animation: {
+            animateRotate: true,
+            animateScale: true,
+            duration: 1500,
+            easing: 'easeOutCubic'
+          }
+        }
+      });
+      
+      // 审核相关按钮点击事件
+      const reviewButtons = document.querySelectorAll('button:has(.fa-check), button:has(.fa-times)');
+      const reviewModal = document.getElementById('reviewModal');
+      const closeModal = document.getElementById('closeModal');
+      const cancelReview = document.getElementById('cancelReview');
+      
+      reviewButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          reviewModal.classList.remove('hidden');
+          reviewModal.classList.add('flex');
+          document.body.style.overflow = 'hidden';
         });
-
+      });
+      
+      function hideModal() {
+        reviewModal.classList.add('hidden');
+        reviewModal.classList.remove('flex');
+        document.body.style.overflow = '';
+      }
+      
+      closeModal.addEventListener('click', hideModal);
+      cancelReview.addEventListener('click', hideModal);
+      
+      // 点击模态框外部关闭
+      reviewModal.addEventListener('click', (e) => {
+        if (e.target === reviewModal) {
+          hideModal();
+        }
+      });
+      
+      // 滚动时导航栏效果
+      const header = document.querySelector('header');
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 10) {
+          header.classList.add('bg-dark');
+          header.classList.remove('bg-secondary');
+        } else {
+          header.classList.remove('bg-dark');
+          header.classList.add('bg-secondary');
+        }
+      });
     });
-</script>
+  </script>
 </body>
 </html>
